@@ -238,9 +238,9 @@ lr_config = dict(
 seed = 2
 n_gpus = 1
 gpu_model = 'NVIDIATITANRTX'
-runner = dict(type='IterBasedRunner', max_iters=200)
+runner = dict(type='IterBasedRunner', max_iters=400)
 checkpoint_config = dict(by_epoch=False, interval=100, max_keep_ckpts=1)
-evaluation = dict(interval=200, metric='mIoU')
+evaluation = dict(interval=2000, metric='mIoU')
 name = '240925_1005_gta2cs_mic_daformer_bcb5a'
 exp = 'basic'
 name_dataset = 'gta2cityscapes_512x512'

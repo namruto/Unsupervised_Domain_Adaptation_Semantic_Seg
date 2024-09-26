@@ -4,13 +4,20 @@ log_config = dict(
     hooks=[dict(type='TextLoggerHook', by_epoch=False)])
 dist_params = dict(backend='nccl')
 log_level = 'INFO'
-load_from = None
-resume_from = "/kaggle/working/Unsupervised_Domain_Adaptation_semantic_seg/seg/work_dirs/local-basic/240925_0746_240925_1005_gta2cs_mic_daformer_bcb5a_16dad/iter_200.pth"
+
+# Bước 1: nhớ update biến max_iter trong config để nó train tiếp.
+# Bước 2: thay 3 biến load_from, resume_from, checkpoint trong config thành đường dẫn đến file .pth cuối cùng
+# Bước 3: chạy lệnh với --config <đến file config này>
+# VD:
+load_from = "/kaggle/working/Unsupervised_Domain_Adaptation_semantic_seg/seg/work_dirs/local-basic/240925_0746_240925_1005_gta2cs_mic_daformer_bcb5a_16dad/iter_200.pth" 
+resume_from = "/kaggle/working/Unsupervised_Domain_Adaptation_semantic_seg/seg/work_dirs/local-basic/240925_0746_240925_1005_gta2cs_mic_daformer_bcb5a_16dad/iter_200.pth" 
+checkpoint = "/kaggle/working/Unsupervised_Domain_Adaptation_semantic_seg/seg/work_dirs/local-basic/240925_0746_240925_1005_gta2cs_mic_daformer_bcb5a_16dad/iter_200.pth" 
+
+
 workflow = [('train', 1)]
 cudnn_benchmark = True
 norm_cfg = dict(type='BN', requires_grad=True)
 find_unused_parameters = True
-checkpoint = 'resume_from'
 model = dict(
     type='EncoderDecoder',
     pretrained=checkpoint,
@@ -238,9 +245,13 @@ lr_config = dict(
 seed = 2
 n_gpus = 1
 gpu_model = 'NVIDIATITANRTX'
-runner = dict(type='IterBasedRunner', max_iters=400)
-checkpoint_config = dict(by_epoch=False, interval=100, max_keep_ckpts=1)
-evaluation = dict(interval=200, metric='mIoU')
+
+runner = dict(type='IterBasedRunner', max_iters=400) # max_iters ở đây là số lần train tối đa
+checkpoint_config = dict(by_epoch=False, interval=100, max_keep_ckpts=1) # interval ở đây là số lần lưu epoch, 
+                                                                        # vd như là mỗi lần train đc 100 vòng sẽ lưu epoch 1 lần
+evaluation = dict(interval=200, metric='mIoU') # interval ở đây là số lần chạy evaluation trên tập validation
+                                                # vd như ở đây là sẽ đánh giá mỗi lần train được 200 vòng
+
 name = '240925_1005_gta2cs_mic_daformer_bcb5a'
 exp = 'basic'
 name_dataset = 'gta2cityscapes_512x512'

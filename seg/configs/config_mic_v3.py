@@ -195,7 +195,7 @@ data = dict(
                 ])
         ]))
 uda = dict(
-    type='DACS_META_EMAN',
+    type='DACS_META_PSLBL',
     source_only=False,
     alpha=0.999,
     pseudo_threshold=0.968,

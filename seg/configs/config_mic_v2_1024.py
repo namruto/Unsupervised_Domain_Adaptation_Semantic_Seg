@@ -238,7 +238,7 @@ lr_config = dict(
 seed = 2
 n_gpus = 1
 gpu_model = 'NVIDIATITANRTX'
-runner = dict(type='IterBasedRunner', max_iters=1000)
+runner = dict(type='IterBasedRunner', max_iters=200)
 checkpoint_config = dict(by_epoch=False, interval=100, max_keep_ckpts=1)
 evaluation = dict(interval=200, metric='mIoU')
 name = "anyName"
